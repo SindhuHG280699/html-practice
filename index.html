@@ -1,10 +1,125 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Sindhu Practice</title>
+<meta charset="UTF-8">
+<title>Azure Static Web App - Demo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(135deg, #0078D4, #00B4FF);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+ 
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            width: 350px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+ 
+        h2 {
+            text-align: center;
+            color: #0078D4;
+        }
+ 
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+ 
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            background-color: #0078D4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+ 
+        button:hover {
+            background-color: #005A9E;
+        }
+ 
+        .response {
+            margin-top: 15px;
+            font-size: 14px;
+            color: green;
+        }
+ 
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
+            color: gray;
+        }
+</style>
 </head>
+ 
 <body>
-    <h1>Hello Sindhu </h1>
-    <p>This is my sample GitHub HTML project.</p>
+ 
+<div class="container">
+<h2>Azure Static Web App</h2>
+ 
+    <input type="text" id="username" placeholder="Enter Username" />
+<input type="password" id="password" placeholder="Enter Password" />
+ 
+    <button onclick="callAPI()">Login</button>
+ 
+    <div class="response" id="responseMessage"></div>
+ 
+    <div class="footer">
+        Hosted on Azure Static Web Apps
+</div>
+</div>
+ 
+<script>
+    async function callAPI() {
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+ 
+        if (!username || !password) {
+            document.getElementById("responseMessage").innerText = "Please enter credentials.";
+            return;
+        }
+ 
+        try {
+            // 🔹 Replace with your Container App API URL
+            const apiUrl = "https://your-container-app-url/api/login";
+ 
+            const response = await fetch(apiUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    username: username,
+                    password: password
+                })
+            });
+ 
+            const result = await response.json();
+ 
+            document.getElementById("responseMessage").innerText =
+                "Response: " + JSON.stringify(result);
+ 
+        } catch (error) {
+            document.getElementById("responseMessage").innerText =
+                "Error connecting to backend.";
+        }
+    }
+</script>
+ 
 </body>
 </html>
